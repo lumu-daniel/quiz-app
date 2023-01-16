@@ -45,8 +45,13 @@ class MainViewModel @Inject constructor(
                 quizRepository.insertQuestion(i)
             }
         }
+        updateQn()
+    }
 
-        _question.postValue(_qns.value!![questionNumber])
+    fun updateQn(){
+        _qns.value?.let {
+            _question.postValue(it[questionNumber])
+        }
     }
 
     fun onNext(){
@@ -55,7 +60,7 @@ class MainViewModel @Inject constructor(
             _isDone.postValue(true)
         }else{
             questionNumber++
-            _question.postValue(_qns.value!![questionNumber])
+            updateQn()
         }
 
         saveResult()

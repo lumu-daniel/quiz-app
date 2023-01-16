@@ -13,7 +13,6 @@
             android:fontFamily="@font/dubai_medium"
             android:text="A question"
             android:textSize="15dp"
-            android:textColor="@color/darkBackground"
     />
     <LinearLayout
             android:id="@+id/options"

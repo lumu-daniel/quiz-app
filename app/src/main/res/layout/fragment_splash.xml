@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="15dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+                android:id="@+id/tvWelcome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/dubai_bold"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:text="Welcome To \n Quiz App"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:paddingVertical="8dp"
+                android:paddingHorizontal="15dp"
+                android:textAllCaps="false"
+                app:cornerRadius="10dp"
+                android:elevation="10dp"
+                android:fontFamily="@font/dubai_medium"
+                app:layout_constraintBottom_toBottomOf="@id/tvWelcome"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

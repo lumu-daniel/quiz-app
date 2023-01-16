@@ -77,7 +77,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun onHome(){
-        _questionNumber.postValue(0)
+        _questionNumber.value = 0
     }
 
     fun saveCorrect(){
@@ -92,6 +92,12 @@ class MainViewModel @Inject constructor(
                 wrongAnswer = qn.options.split("-")[selectedOpt],
                 correctAnswer = qn.options.split("-")[qn.correctIndex]
             ))
+        }
+    }
+
+    fun deleteFailedQn(){
+        viewModelScope.launch(Dispatchers.IO) {
+            quizRepository.deleteAllFailedQuestions()
         }
     }
 }

@@ -1,10 +1,6 @@
 package com.kdl.quizapp.domain
 
 import androidx.lifecycle.LiveData
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
 import com.kdl.quizapp.data.local.db.CurrentResult
 import com.kdl.quizapp.data.local.db.FailedQuestion
 import com.kdl.quizapp.data.local.db.Question
@@ -25,7 +21,7 @@ interface QuizRepository {
 
     suspend fun insertFailedQuestion(failedQuestion: FailedQuestion)
 
-    suspend fun deleteFailedQuestion(failedQuestion: FailedQuestion)
+    suspend fun deleteAllFailedQuestions()
 
     fun observeAllFailedQuestions(): LiveData<List<FailedQuestion>>
 }

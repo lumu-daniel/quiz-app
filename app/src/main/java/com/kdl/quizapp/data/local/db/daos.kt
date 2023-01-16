@@ -35,8 +35,8 @@ interface FailedQuestionDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFailedQuestion(failedQuestion: FailedQuestion)
 
-    @Delete
-    suspend fun deleteFailedQuestion(failedQuestion: FailedQuestion)
+    @Query("DELETE FROM failed_question")
+    suspend fun deleteAllFailedQuestions()
 
     @Query("SELECT * FROM failed_question")
     fun observeAllFailedQuestions(): LiveData<List<FailedQuestion>>

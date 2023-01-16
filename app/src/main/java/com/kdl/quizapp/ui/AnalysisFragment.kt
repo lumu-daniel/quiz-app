@@ -23,4 +23,9 @@ class AnalysisFragment:Fragment(R.layout.fragment_analysis) {
             })
         }
     }
+
+    override fun onDetach() {
+        super.onDetach()
+        viewModel.deleteFailedQn()
+    }
 }

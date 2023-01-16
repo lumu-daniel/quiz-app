@@ -38,8 +38,8 @@ class QuizRepositoryImpl @Inject constructor(
         failedQuestionDao.insertFailedQuestion(failedQuestion)
     }
 
-    override suspend fun deleteFailedQuestion(failedQuestion: FailedQuestion) {
-        failedQuestionDao.deleteFailedQuestion(failedQuestion)
+    override suspend fun deleteAllFailedQuestions() {
+        failedQuestionDao.deleteAllFailedQuestions()
     }
 
     override fun observeAllFailedQuestions(): LiveData<List<FailedQuestion>> {

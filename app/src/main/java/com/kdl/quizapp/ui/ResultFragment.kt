@@ -18,8 +18,9 @@ class ResultFragment:Fragment(R.layout.fragment_result) {
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
         btnTryAgain.setOnClickListener {
+            viewModel.onHome()
             findNavController().navigate(
-                R.id.action_questionFragment_to_splashFragment
+                R.id.action_resultFragment_to_splashFragment
             )
         }
 
@@ -29,7 +30,7 @@ class ResultFragment:Fragment(R.layout.fragment_result) {
             )
         }
 
-        viewModel.results.value?.let {
+        viewModel.results.observe(viewLifecycleOwner) {
             if(it.isNotEmpty()){
                 tvTotalQns.text = "Total Questions: ${it[0].totalQuestions}"
                 tvTCorrectAns.text = "Correct Answers (Score): ${it[0].correctAnswers}"

@@ -11,6 +11,7 @@ import com.kdl.quizapp.data.local.db.Question
 import com.kdl.quizapp.domain.QuizRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,19 +20,18 @@ class MainViewModel @Inject constructor(
     private val quizRepository: QuizRepository
 ):ViewModel() {
 
-    private val _question = MutableLiveData<Question>()
-    val question: LiveData<Question> = _question
-
     private val _isDone = MutableLiveData<Boolean>()
     val isDone: LiveData<Boolean> = _isDone
 
-    private val _qns: LiveData<List<Question>> = quizRepository.observeAllQuestions()
+    val qns = quizRepository.observeAllQuestions()
 
     val results: LiveData<List<CurrentResult>> = quizRepository.observeAllCurrentResults()
 
     val failedQuestions = quizRepository.observeAllFailedQuestions()
 
-    private var questionNumber: Int = 0
+    private val _questionNumber = MutableLiveData<Int>()
+    val questionNumber: LiveData<Int> = _questionNumber
+
     private var correctAnswered: Int = 0
     private var wrongAnswered: Int = 0
 
@@ -42,25 +42,22 @@ class MainViewModel @Inject constructor(
     private fun saveQns() {
         viewModelScope.launch (Dispatchers.IO){
             for (i in androidQuestions){
-                quizRepository.insertQuestion(i)
+                try {
+                    quizRepository.insertQuestion(i)
+                }catch (ex: Exception){
+                    ex.printStackTrace()
+                }
             }
-        }
-        updateQn()
-    }
-
-    fun updateQn(){
-        _qns.value?.let {
-            _question.postValue(it[questionNumber])
+            delay(100)
+            _questionNumber.postValue(0)
         }
     }
 
     fun onNext(){
-        _question.postValue(_qns.value?.get(questionNumber))
-        if(questionNumber==_qns.value!!.size-1){
+        if(_questionNumber.value==qns.value!!.size-1){
             _isDone.postValue(true)
         }else{
-            questionNumber++
-            updateQn()
+            _questionNumber.value = _questionNumber.value!!+1
         }
 
         saveResult()
@@ -71,7 +68,7 @@ class MainViewModel @Inject constructor(
             quizRepository.deleteCurrentResult()
             quizRepository.insertCurrentResult(
                 CurrentResult(
-                questionNumber,
+                _questionNumber.value!!,
                 correctAnswered,
                 wrongAnswered
             )
@@ -80,7 +77,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun onHome(){
-        questionNumber = 0
+        _questionNumber.postValue(0)
     }
 
     fun saveCorrect(){

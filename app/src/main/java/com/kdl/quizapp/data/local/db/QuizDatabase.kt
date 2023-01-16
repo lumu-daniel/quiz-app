@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
         Question::class,
         CurrentResult::class,
         FailedQuestion::class],
-    version = 2
+    version = 4
 )
 abstract class QuizDatabase:RoomDatabase() {
     abstract fun QuestionDao():QuestionDao

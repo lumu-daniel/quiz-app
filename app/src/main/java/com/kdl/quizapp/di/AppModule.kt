@@ -1,7 +1,6 @@
 package com.kdl.quizapp.di
 
 import android.content.Context
-import androidx.room.PrimaryKey
 import androidx.room.Room
 import com.kdl.quizapp.common.Constants.DATABASE_NAME
 import com.kdl.quizapp.data.QuizRepositoryImpl
@@ -17,13 +16,15 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule {
+object AppModule {
 
     @Provides
     @Singleton
     fun provideQuizDatabase(
         @ApplicationContext context: Context
-    ) = Room.databaseBuilder(context,QuizDatabase::class.java,DATABASE_NAME).build()
+    ) = Room.databaseBuilder(context,QuizDatabase::class.java,DATABASE_NAME)
+        .fallbackToDestructiveMigration()
+        .build()
 
     @Provides
     @Singleton

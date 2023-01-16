@@ -1,12 +1,7 @@
 package com.kdl.quizapp.data.local.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import javax.annotation.Detainted
+import androidx.room.*
 
 @Dao
 interface QuestionDao {
@@ -17,7 +12,7 @@ interface QuestionDao {
     @Delete
     suspend fun deleteQuestion(question: Question)
 
-    @Query("SELECT * FROM Question")
+    @Query("SELECT * FROM questions ORDER BY id DESC")
     fun observeAllQuestions(): LiveData<List<Question>>
 }
 
@@ -27,10 +22,10 @@ interface CurrentResultDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCurrentResult(currentResult: CurrentResult)
 
-    @Query("DELETE FROM CurrentResult")
+    @Query("DELETE FROM current_result")
     suspend fun deleteAllCurrentResult()
 
-    @Query("SELECT * FROM CurrentResult")
+    @Query("SELECT * FROM current_result")
     fun observeAllCurrentResults(): LiveData<List<CurrentResult>>
 }
 
@@ -43,6 +38,6 @@ interface FailedQuestionDao{
     @Delete
     suspend fun deleteFailedQuestion(failedQuestion: FailedQuestion)
 
-    @Query("SELECT * FROM FailedQuestion")
+    @Query("SELECT * FROM failed_question")
     fun observeAllFailedQuestions(): LiveData<List<FailedQuestion>>
 }

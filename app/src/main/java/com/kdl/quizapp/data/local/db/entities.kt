@@ -3,7 +3,7 @@ package com.kdl.quizapp.data.local.db
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName ="Question")
+@Entity(tableName ="questions")
 data class Question(
     val options: String,
     val correctIndex: Int,
@@ -14,7 +14,7 @@ data class Question(
 )
 
 
-@Entity(tableName ="CurrentResult")
+@Entity(tableName ="current_result")
 data class CurrentResult(
     val totalQuestions: Int,
     val correctAnswers: Int,
@@ -25,7 +25,7 @@ data class CurrentResult(
 )
 
 
-@Entity(tableName ="FailedQuestion")
+@Entity(tableName ="failed_question")
 data class FailedQuestion(
     val question: String,
     val wrongAnswer: String,
